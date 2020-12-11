@@ -48,7 +48,7 @@
 - whatever the RESULT (of an expression, variable, function) is, it is going to be printed out inside ${},
 - template tags, useful for modifying template strings, use the special strings keyword
 
-```
+```javascript
 function h1(strings) {
   return `<h1>${strings}</h1>`;
 }
