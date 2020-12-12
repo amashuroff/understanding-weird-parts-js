@@ -1,5 +1,9 @@
-function h1(strings) {
-  return `<h1>${strings}</h1>`;
+let foo = [];
+
+for (let i = 0; i < 10; i++) {
+  foo[i] = function () {
+    return i;
+  };
 }
 
-console.log(h1`asim`);
+console.log(foo[0]());
