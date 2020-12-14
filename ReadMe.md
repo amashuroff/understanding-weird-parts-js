@@ -2,6 +2,11 @@
 
 ---
 
+### Parameters and Arguments
+
+- Parameters are variables listed as a part of the function definition. f (a, b) {}
+- Arguments are values passed to the function when it is invoked. f(1,2)
+
 ## Compilations vs Polyfills
 
 - Compiling a new feature which actually existed in the ES5 with Babel
@@ -12,6 +17,7 @@
 
 - Allows you to put a piece of a program or a function into strict operating mode
 - It is a string because an older browser would fail to (use strict) keyword (since it is a new feature that has never existed before), but if it sees a string, it would think, oh, it's just a string, it wont do anything, ill ignore it!
+- stops default THIS object being a global object, it's going to be undefined
 
 ### Strict
 
@@ -206,6 +212,195 @@ boo1(); // ok
 - When a function returns a function, returned function keeps a reference to any variables that it needs to execute
 - look in local --> closure --> global for a variable
 - refer to vars in outer scopes
+
+```javascript
+let foo = [];
+
+for (let i = 0; i < 10; i++) {
+  foo[i] = function () {
+    return i;
+  };
+}
+
+console.log(foo[0]());
+```
+
+### Destructuring
+
+- Way to extract values into variables from objects or arrays
+
+```javascript
+// destructuring pattern
+// don't over use it
+// keep it simple and only at 1 level, no nesting
+
+// in the obj, take the property first and store it into f
+const obj = { first: "alex", age: 25 };
+const { first: f, age } = obj;
+
+// arrays
+const arr = ["apple", 23, "banana"];
+const [apple, ...banana] = arr;
+console.log(apple, banana);
+
+// function arguments
+function moo({ x = 0 }) {
+  console.log(x);
+}
+moo({ x: 2 });
+```
+
+### Looping
+
+```javascript
+const arr = [1, 2, 3];
+
+for (let index in arr) {
+  console.log(index);
+  // thinks that an index is a prop of an object
+  // gives an index as a string
+  console.log(typeof index);
+}
+```
+
+### THIS keyword
+
+- in JS, this is determined by the calling context;
+- WHO calls the function, which object, window or the one you've just created
+- it's not lexical, it is determined by context, or how the function is executed
+
+```javascript
+"use strict";
+const obj = {
+  checkThis: function () {
+    const self = this;
+    console.log(this);
+
+    // checkOther's calling context is window here
+    function checkOther() {
+      console.log(this);
+      console.log(self);
+    }
+    checkOther();
+  },
+};
+
+// calling context is obj
+obj.checkThis();
+```
+
+### Call, Bind, Apply
+
+- Call a function with a specific this and arguments, call(this, a, b, c)
+- Apply a function with specific this and arguments as an array, apply(this, [a, b, c])
+- Normally you will use call, unless a function takes in a variable number of parameters
+- Bind a this to a function EXPRESSION. Doesn't work of function declarations, because bind is applicable to the function object that is created
+
+```javascript
+function c(a, b = 2) {
+  console.log(a, b);
+}
+c.call(null, 1);
+
+function a(...args) {
+  console.log(args);
+}
+a.apply(null, [1, 2, 3, 4, 5]);
+
+// creates a function object and assigns it to b variable
+let b = function () {
+  console.log(this);
+}.bind({});
+
+// b = b.bind(1), if let
+
+b();
+```
+
+### Arrow function
+
+- Borrows this keyword from the lexical surroundings
+
+### Prototype chain
+
+- proto points to the this object's prototype
+- JS traverses the prototype chain, when looking for a property and only turns undefined when it can't find property in all the objects in the chain
+
+```javascript
+const animal = {
+  kind: "animal",
+};
+// animal is going to be the prototype of alex object
+// second parameter describes the properties you want your object to have
+const alex = Object.create(animal, {
+  food: {
+    value: "mango",
+  },
+});
+
+console.log(alex);
+```
+
+### OOP
+
+- it's a programming paradigm, based on the concept of objects
+- it uses objects to describe real world
+- objects are the building blocks of the application
+- they are self-contained blocks of code that interact with each other
+- they interact with use of API's
+
+### How to model real world data using a Class
+
+- Abstraction: ignore/hide details that don't matter
+- Encapsulation: show public vs private methods and data
+- Inheritance: Child class extends the Parent class.
+- Polymorphism (many shapes, greek): Child class can overwrite a methods, inherited from a Parent class.
+- class inherits from a class
+
+### Difference between classical and Prototypal inheritance
+
+- Classical -> class (blueprint) -> instance of that class (house built from the blueprint)
+- Prototypal -> New objects are created from existing objects, (build a house from existing house)
+- in JS there is a method that looks like classical inheritance, emulation (at least in code)
+- Pseudo-Classical pattern, Prototypal pattern
+
+### OOP in JS
+
+- all objects in JS are linked to a prototype object, each object has a prototype
+- prototype object contains methods and properties, that all objects connected to this prototype can access and use, this behavior is called prototypal inheritance
+- instance inherits from a class
+- Object delegates it's behavior to a prototype
+
+### Prototype property
+
+- Prototype property (proto) of a function (Person) points to an Object
+- Object has a constructor property that points to function itself (to Person), and a proto that points all the way to null
+- man's prototype property (proto) points to the prototype of the (Person) which is the constructor
+- If you create multiple instances, they all share the same prototype, it saves on memory
+- proto is the actual object that is used in the lookup chain to resolve methods, etc.
+- prototype is the object that is used to build proto when you create an object with new keyword.
+- prototype is not available on the instances themselves (or other objects), but only on the constructor functions.
+
+```javascript
+"use strict";
+// function constructor
+function Person(first, last) {
+  this.first = first;
+  this.last = last;
+
+  // never do this
+  this.sayHi = function () {
+    return "Hi, I am " + this.first;
+  };
+}
+
+const alex = new Person("Alex", "M");
+console.log(alex);
+
+const valeriya = {};
+Person.call(valeriya, "Valeriya", "A");
+console.log(valeriya);
+```
 
 ### Misc
 
