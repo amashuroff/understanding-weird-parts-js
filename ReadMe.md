@@ -321,26 +321,6 @@ b();
 
 - Borrows this keyword from the lexical surroundings
 
-### Prototype chain
-
-- proto points to the this object's prototype
-- JS traverses the prototype chain, when looking for a property and only turns undefined when it can't find property in all the objects in the chain
-
-```javascript
-const animal = {
-  kind: "animal",
-};
-// animal is going to be the prototype of alex object
-// second parameter describes the properties you want your object to have
-const alex = Object.create(animal, {
-  food: {
-    value: "mango",
-  },
-});
-
-console.log(alex);
-```
-
 ### OOP
 
 - it's a programming paradigm, based on the concept of objects
@@ -370,16 +350,14 @@ console.log(alex);
 - prototype object contains methods and properties, that all objects connected to this prototype can access and use, this behavior is called prototypal inheritance
 - instance inherits from a class
 - Object delegates it's behavior to a prototype
+- console.dir - to get the actual object
 
-### Prototype property
+### Prototype
 
-- Prototype property (proto) of a function (Person) points to an Object
-- Object has a constructor property that points to function itself (to Person), and a proto that points all the way to null
-- man's prototype property (proto) points to the prototype of the (Person) which is the constructor
-- If you create multiple instances, they all share the same prototype, it saves on memory
-- proto is the actual object that is used in the lookup chain to resolve methods, etc.
-- prototype is the object that is used to build proto when you create an object with new keyword.
-- prototype is not available on the instances themselves (or other objects), but only on the constructor functions.
+- Each and every function in JS automatically has a property called prototype
+- prototype of an object (proto) is a prototype property of a constructor function (prototype of linked objects property)
+- Person.prototype is a prototype that is going to be used for all the objects created with this constructor function
+- works also with classes but not with Object.create()
 
 ```javascript
 "use strict";
@@ -396,11 +374,70 @@ function Person(first, last) {
 
 const alex = new Person("Alex", "M");
 console.log(alex);
+// new {} is created
+// function is called this = {}
+// {} linked to a prototype property of a Person
+// function automatically returns {}
 
 const valeriya = {};
 Person.call(valeriya, "Valeriya", "A");
 console.log(valeriya);
 ```
+
+### Prototype chain
+
+- proto points to the this object's prototype
+- JS traverses the prototype chain, when looking for a property and only turns undefined when it can't find property in all the objects in the chain
+
+```javascript
+const animal = {
+  kind: "animal",
+};
+// animal is going to be the prototype of alex object
+// second parameter describes the properties you want your object to have
+const alex = Object.create(animal, {
+  food: {
+    value: "mango",
+  },
+});
+
+console.log(alex);
+```
+
+### What is CORS
+
+- Cross origin resource sharing
+- CORS allows you to break the same origin policy of a browser
+- SOP: request some data from Moo.com to Foo.com, RESPONSE is blocked by SOP
+- Since the response is blocked, and put/delete/post methods still work, what's the purpose of blocking anything then?
+- to get around the above point, CORS sends pre-flight request, Options, with Access Control Request Method, is this method allowed?
+- Then, if everything is OK, Foo.com will send Access Control Allow Origin: Moo.com, Access Control Allow Methods PUT for example
+
+### What si JSONP
+
+- JSONP predates the CORS standard
+- only works with get
+- json will return json response wrapped into a function
+- script tag does not have any limitations, from which domain it can pull script from
+- you create a script tag with src set to url from which you want to get data
+- it is unsafe
+
+### Difference between event bubbling and capturing
+
+- we have a button that was clicked
+- event is fired by the root objects and travels directly down the tree to the button (target)
+- it also touches every single parent of this button
+- when reached the bottom, it goes all way back to the root element
+
+1. Event Capturing
+2. Event Bubbling
+
+- by Default event listener listens to the bubbling phase
+
+### Difference between stopPropagation() and preventDefault()
+
+- stopPropagation stops from going through bubbling phase or capturing phase
+- preventDefault stops the default behavior (checkbox tick would not be applied for example)
 
 ### Misc
 
