@@ -77,7 +77,7 @@ eval("var a = 1"); // vars leak out outside
 
 ### Template strings
 
-- whatever the RESULT (of an expression, variable, function) is, it is going to be printed out inside ${},
+- whatever the RESULT (of an expression, variable, function) is, it is going to be printed out inside ${}
 - template tags, useful for modifying template strings, use the special strings keyword
 
 ```javascript
@@ -91,6 +91,8 @@ console.log(h1`alex`);
 ### Template tags
 
 - very useful feature enhance already existing template string
+- first parameter is an array of strings passed into template tag function
+- all subsequent params are values passed in template literal
 
 ```javascript
 function text(strings, ...values) {
