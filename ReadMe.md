@@ -441,6 +441,10 @@ console.log(alex);
 - stopPropagation stops from going through bubbling phase or capturing phase
 - preventDefault stops the default behavior (checkbox tick would not be applied for example)
 
+### Array Methods
+
+- push and unshift change the initial array, all return new length of an array
+
 ### Misc
 
 - we can change global var (if not const) in the scope of the function
@@ -460,3 +464,5 @@ f(a);
 
 console.log(a, b);
 ```
+
+- JavaScript properties that begin with a digit cannot be referenced with dot notation and must be accessed using bracket notation.
