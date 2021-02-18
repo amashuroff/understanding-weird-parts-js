@@ -445,6 +445,12 @@ console.log(alex);
 
 - push and unshift change the initial array, all return new length of an array
 
+### Arrays
+
+- Arrays store links to objects or primitives stored inside, thats why you can store any type of value inside of an array
+- Arrays are dynamic, you can change it's size, under the hood, array increases its size by 2x, and just moves all the links in the new array
+- Every value in the array is an address with fixed size, independent of the data stored inside
+
 ### Misc
 
 - we can change global var (if not const) in the scope of the function
@@ -466,3 +472,4 @@ console.log(a, b);
 ```
 
 - JavaScript properties that begin with a digit cannot be referenced with dot notation and must be accessed using bracket notation.
+- ECMAScript. Это большой и серьезный документ, описывающий устройство языка и поведение во всех возможных ситуациях.
