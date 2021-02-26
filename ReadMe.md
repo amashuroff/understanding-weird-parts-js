@@ -250,6 +250,12 @@ function moo({ x = 0 }) {
   console.log(x);
 }
 moo({ x: 2 });
+
+// looping
+for (const [key, value] of entries) {
+  console.log(key);
+  console.log(value);
+}
 ```
 
 ### Looping
@@ -453,6 +459,41 @@ console.log(alex);
 - Массив представляется цельным куском памяти, размер которого вычисляется по следующей формуле: количество элементов \* количество памяти под каждый элемент
 - index in array is a memory offset relative to the start of the memory block (C progrm lang)
 
+### Objects
+
+- Если имя константы соответствует имени свойства в объекте, то можно просто добавить имя константы в определение объекта без указания свойства
+- Функция Object.assign() берёт объект, переданный первым параметром, и переносит в него всё из объектов, переданных остальными параметрами. Если свойство присутствовало и в первом объекте и во втором, то оно будет перезаписано значением из второго объекта.
+- shallow copy не затрагивает вложенные объекты. Они оказываются в новом объекте по ссылке из старого
+- Для реализации ассоциативных массивов (Обьект в JS) часто используют специальную структуру данных — хеш-таблицу. Она позволяет организовать данные ассоциативного массива удобным для хранения способом. Для этого хеш-таблица использует две вещи: индексированный массив и функцию для хеширования ключей
+- Хеширование — операция, которая преобразует любые входные данные в строку (реже число) фиксированной длины. Функция, реализующая алгоритм преобразования, называется "хеш-функцией", а результат называют "хешем" или "хеш-суммой".
+
+```javascript
+// Destructuring
+const person = { firstName: "Rasmus", lastName: "Lerdorf", manager: true };
+
+const { manager: isManager } = person;
+
+console.log(isManager); // => true
+
+// Destr default values
+const person = { firstName: "Rasmus", lastName: "Lerdorf" };
+
+console.log(person.manager); // undefined
+const { manager = false } = person;
+console.log(manager); // => false
+
+// Destruct deep
+// const user = response.data.attributes;
+// const links = response.data.links;
+// const author = response.data.relationships.author;
+
+const {
+  links,
+  attributes: user,
+  relationships: { author },
+} = response.data;
+```
+
 ### Misc
 
 - we can change global var (if not const) in the scope of the function
@@ -475,3 +516,4 @@ console.log(a, b);
 
 - JavaScript properties that begin with a digit cannot be referenced with dot notation and must be accessed using bracket notation.
 - ECMAScript. Это большой и серьезный документ, описывающий устройство языка и поведение во всех возможных ситуациях.
+- В console.log() встроено одно ограничение, если в объекте есть другие объекты на глубине больше второго уровня вложенности, то при выводе такого объекта на экран вместо объектов отобразится строка [Object], а вместо массива [Array]
