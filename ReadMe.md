@@ -448,8 +448,10 @@ console.log(alex);
 ### Arrays
 
 - Arrays store links to objects or primitives stored inside, thats why you can store any type of value inside of an array
-- Arrays are dynamic, you can change it's size, under the hood, array increases its size by 2x, and just moves all the links in the new array
-- Every value in the array is an address with fixed size, independent of the data stored inside
+- Arrays are pseudo dynamic, you can change it's size, under the hood, array increases its size by 2x, and just moves all the links in the new array
+- Every value in the array is an address with fixed size, independent of the data stored inside. Every address has a fixed size and type, we can access it in memory using offset formula
+- Массив представляется цельным куском памяти, размер которого вычисляется по следующей формуле: количество элементов \* количество памяти под каждый элемент
+- index in array is a memory offset relative to the start of the memory block (C progrm lang)
 
 ### Misc
 
