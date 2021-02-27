@@ -503,6 +503,7 @@ const {
 
 - Currying is a transformation of the function from callable like f(a, b) to f(a)(b)
 - in a currying an argument stored in a lexical environment
+- In Javascript, every object can implement method valueOf that when the object is evaluated, the result would be the result of the method call.
 
 ```javascript
 function curry(func) {
@@ -601,7 +602,7 @@ const curry = (fn) => {
 const infiniteVariadicCurry = (fn) => {
   const next = (...args) => {
     return (...vars) => {
-      if (![vars].length) {
+      if (!vars.length) {
         return args.reduce((acc, a) => {
           return fn.call(null, acc, a); // doesnt matter what this is
         }, 0);
@@ -615,6 +616,20 @@ const infiniteVariadicCurry = (fn) => {
 // const iSum = infiniteCurry((x, y) => x + y);
 
 // console.log(iSum(1, 2, 10)(3)(4)(2)());
+
+// Infinite curry function without the last parenth
+// More of a hack
+
+function sum(...args) {
+  // The usage of Object.assign here allows us to return a new function instance with bound arguments
+  // and re-write a method
+  return Object.assign(sum.bind(null, ...args), {
+    valueOf: () => args.reduce((a, c) => a + c, 0),
+  });
+}
+
+// преобразование обьекта в примитив
+console.log(+sum(1)(2)(3)(1, 2, 3)); // 12
 ```
 
 ### Misc
