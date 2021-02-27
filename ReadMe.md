@@ -494,6 +494,129 @@ const {
 } = response.data;
 ```
 
+### Functions
+
+- length is a property of the function objects and indicates how many arguments the function expects
+- Arity, number of arguments taken by a function
+
+### Currying
+
+- Currying is a transformation of the function from callable like f(a, b) to f(a)(b)
+- in a currying an argument stored in a lexical environment
+
+```javascript
+function curry(func) {
+  return function curried(...args) {
+    if (args.length >= func.length) {
+      return func.apply(this, args);
+    } else {
+      return function (...args2) {
+        return curried.apply(this, args.concat(args2));
+      };
+    }
+  };
+}
+
+// Simplest currying
+// function with param z can traverse its hierarchical chain of scope bindings
+const mul = (x) => {
+  return (y) => {
+    return (z) => {
+      return x * y * z;
+    };
+  };
+};
+
+// Transformation of a function to curry
+function curry(func) {
+  return function curried(...args) {
+    if (args.length >= func.length) {
+      return func.apply(this, args);
+    } else {
+      // returns the function that is ready to accept new args
+      return function (...args2) {
+        return curried.apply(this, args.concat(args2));
+      };
+    }
+  };
+}
+const sum = (a, b) => {
+  return a + b;
+};
+const curried = curry(sum);
+// ----
+
+// Another implementation of the curry function
+const _sum3 = (x, y, z) => x + y + z;
+
+const _sum4 = (p, q, r, s) => p + q + r + s;
+
+function curry(fn) {
+  // n of arguments we expect
+  const N = fn.length;
+
+  // define an inner function that will actually do the currying
+  function innerFn(n, args) {
+    return function actualInnerFn(a) {
+      if (n <= 1) {
+        return fn(...args, a);
+      }
+      return innerFn(n - 1, [...args, a]);
+    };
+  }
+
+  // return an inner function with n of arguments to expect and an empty array to start
+  return innerFn(N, []);
+}
+
+// const sum3 = curry(_sum3);
+// const sum4 = curry(_sum4);
+
+// console.log(sum3(1)(3)(2)); // 6
+// console.log(sum4(1)(3)(2)(4)); // 10
+// ----
+
+// Variadic curry function
+const curry = (fn) => {
+  const innerFn = (N, args) => {
+    // using variable arguments to a function
+    return (...x) => {
+      if (N <= x.length) {
+        return fn(...args, ...x);
+      }
+      return innerFn(N - x.length, [...args, ...x]);
+    };
+  };
+
+  return innerFn(fn.length, []);
+};
+
+// const sum = curry(_sum3);
+
+// sum3(2, 3)(4); //9
+// sum3(2)(3, 4); //9
+
+// Infinite curry function + variadic
+
+const infiniteVariadicCurry = (fn) => {
+  const next = (...args) => {
+    return (...vars) => {
+      if (![vars].length) {
+        return args.reduce((acc, a) => {
+          return fn.call(null, acc, a); // doesnt matter what this is
+        }, 0);
+      }
+      return next(...args, ...vars);
+    };
+  };
+  return next();
+};
+
+// const iSum = infiniteCurry((x, y) => x + y);
+
+// console.log(iSum(1, 2, 10)(3)(4)(2)());
+```
+
 ### Misc
 
 - we can change global var (if not const) in the scope of the function
