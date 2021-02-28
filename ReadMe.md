@@ -6,6 +6,35 @@
 
 - Parameters are variables listed as a part of the function definition. f (a, b) {}
 - Arguments are values passed to the function when it is invoked. f(1,2)
+- Когда мы передаём аргумент при вызове функции, его значение присваивается параметру функции. Это неявное автоматическое присваивание, потому что в коде этой операции "не видно".
+
+```javascript
+const func = (x) => {
+  // параметру x будет присвоено
+  // значение аргумента при вызове функции
+  console.log(x);
+};
+
+func(1); // => 1
+// Это можно представить так, что
+// внутри функции создаётся параметр x,
+// которому присваивается значение аргумента:
+// {
+//   let x = 1;
+//   console.log(x);
+// };
+
+func([1, 2]); // => [1, 2]
+// Пример с передачей массива:
+// {
+//   let x = [1, 2]; ---> points to the original array / obj
+//   console.log(x);
+// };
+```
+
+### First-order functions, objects
+
+- В языках программирования существует понятие "объекты первого рода (или класса)". Им обозначают элементы, которые могут быть переданы в функции, возвращены из функций и присвоены переменным (или константам)
 
 ## Compilations vs Polyfills
 
@@ -494,10 +523,27 @@ const {
 } = response.data;
 ```
 
+### Recursion
+
+- when a function calls itself, hopefully with an exit condition
+- it makes it so difficult to wrap your head around it since you should keep track of the whole recursive stack to figure out a solution
+
 ### Functions
 
 - length is a property of the function objects and indicates how many arguments the function expects
 - Arity, number of arguments taken by a function
+
+```javascript
+// определение функции следует обернуть в круглые скобки,
+// чтобы обозначить границы определения для интерпретатора,
+// которому нужно "понимать", что конкретно вы хотите вызвать
+(() => console.log("I love JS"))();
+```
+
+### Higher order Functions
+
+- Они реализуют обобщенный алгоритм задачи, делегируя обработку вызывающему коду,
+  что позволяет не реализовывать алгоритм каждый раз.
 
 ### Currying
 
