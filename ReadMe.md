@@ -678,6 +678,40 @@ function sum(...args) {
 console.log(+sum(1)(2)(3)(1, 2, 3)); // 12
 ```
 
+### Regex
+
+- search through text and group searches together
+
+```javascript
+/e+/g // match how many e's as possible but at least one
+/ea?/g // match a optionally
+/ea*/g // optional but match as many as possible in a row
+/.e/g // match any char that comes before, (can insert how many . as you want)
+/\.e/g // match period followed by an e (escaping \)
+/\w/g //match any word character (\W not a word char)
+/\s/g //match any whitespace (\S not a whitespace)
+/\w{4,5}/g // match any min/max chars in a row (basically a word)
+/[fc]at/g // match any of the chars in char set [fc] followed by an at
+/[a-zA-Z]at/g // can use ranges in char sets
+/(t|T)/g // parenth are used for the groups, anything in a parenth is going to be in it's own group and act upon themselves
+/(t|T){2,3}he/g // | alternation, match 2 or 3 chars of t or T followed by he
+/^T/g // match the beginning of the entire statement
+/\.$/g // match the end of the entire statement
+
+// positive lookbehinds
+// allow to lookbehind the actual thing you want to capture, but do not match it
+/(?<=[tT])he/g
+/(?<![tT])he/g // negative lookbehind to match everything that has no The or the before it
+
+// look aheads
+/(?=[tT])he/g
+/(?![tT])he/g
+
+// phone num regex
+/(?<groupcode>\d{3})[ -]?\d{3}-?{3}/g // dash is optional -?, // naming the group // (?: non capturing group)
+
+```
+
 ### Misc
 
 - we can change global var (if not const) in the scope of the function
