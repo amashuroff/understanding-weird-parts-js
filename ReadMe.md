@@ -148,6 +148,30 @@ text`Hello world ${1}`;
 - Null is used by programmers to indicate no value, only a human will ever set a variable to a value of null. In statically typed languages like Java, null is a concept of an absence of the value, whereas in JS it has an actual value of null.
 - NaN, the only JS value that is unequal to itself, check for NaN --> is me equal to myself?
 
+### Strings
+
+- \ перед символом, и символ "изолируется" от своей специфической роли и превратится в обычный знак в строке.
+- \t — это табуляция, \n это перенос на новую строку.
+
+### Modules
+
+- one file - one module
+- Каждый модуль имеет отдельную область видимости (Lexical environment) — т. е. все объявления переменных, функций и классов не будут доступны за пределами модуля (файла), если не экспортированы явно
+- У каждого модуля есть неявный объект [[Exports]], в котором хранятся ссылки на все экспортируемые сущности, а ключом является идентификатор сущности (например, имя переменной). Это очень напоминает module.exports из модульной системы NodeJS, но [[Exports]] всегда объект, и его нельзя получить напрямую. Единственный способ его изменить — использовать оператор export.
+- В случае же экспорта по умолчанию функции (не анонимной, естественно) или класса — они будут объявлены в области видимости модуля, а [[Exports]].default будет ссылкой на эту сущность.
+
+- Включение модуля без импорта. Иногда бывает нужно, чтобы файл просто запустился.
+
+```javascript
+import "./worker";
+```
+
+### Imports Exports
+
+- При использовании ключевого слова import необходимо указать расширение файла. Пути каталогов (например, './startup/index.js') также должны быть полностью указаны.
+
+- Этот подход обеспечивает идентичное поведение import в среде браузера и на сервере с типовой конфигурацией.
+
 ### Dynamically vs Statically typed language
 
 - In Javascript the type is inferred by whatever value we've assigned to a variable
@@ -163,6 +187,12 @@ text`Hello world ${1}`;
 - Global scope, all global vars are the properties of the window obj
 - Local scope, cannot be accessed outside of the function block (scope)
 - Block scope, {}
+- Область видимости (scope) — это широкое понятие, означающее, грубо говоря, «интерпретатор в разных местах кода видит разные штуки».
+- Лексическая область видимости (Lexical scoping) — это конкретный механизм, одно из правил для области видимости. Этот механизм применяется в JavaScript и большинстве других языков. Под лексической областью видимости можно понимать просто механизм поиска значений: смотрим в текущей области, если нет — идём на уровень выше, и так далее. Слово «лексический» означает, что видимость задаётся исключительно текстом программы, исходным кодом..
+
+### Closures
+
+- Замыкания используют окружение (environment) - это область памяти, где записываются идентификаторы и значения из областей видимости. Не путайте с окружением, как средой исполнения.
 
 ### Hoisting
 
@@ -531,7 +561,14 @@ const {
 - Writing 2 things, how go into oneself and how to stop
 - it makes it so difficult to wrap your head around it since you should keep track of the whole recursive stack to figure out a solution
 - Рекурсивный процесс это чувак, который все дела откладывает на вечер пятницы. В течение недели у него мало работы, а в пятницу завал. Но ему так нравится :)
-- Итеративный процесс это чувак, который все делает при первой возможности. У него работа равномерно распределена по неделе, а пятница — просто обычный день, но последний.
+
+### Iterative Recursion
+
+- Определить начальное состояние
+- Проверить базовый сценарий
+- Определить новое состояние (rec call)
+- Повторить шаг 2
+- - Итеративный процесс это чувак, который все делает при первой возможности. У него работа равномерно распределена по неделе, а пятница — просто обычный день, но последний.
 - для каждого (очередного) рекурсивного вызова в стек вызовов записывается вся информация, связанная с этим конкретным вызовом (параметры функции и её локальные переменные, адрес возврата в точку вызова). Т.е. выделяется дополнительная область памяти (лексический контекст функции, область видимости), обслуживающая данный рекурсивный вызов, а так как это стек вызовов, то контексты предыдущих рекурсивных вызовов также продолжают занимать память. Достижение большой глубины рекурсии (или же если она вовсе является бесконечной, т.е. не достигается терминальное условие выхода из рекурсии) приводит к переполнению стека (ведь он ограничен в размерах) и аварийному завершению всей программы.
 
 ### Referential transparency
@@ -750,6 +787,24 @@ console.log(+sum(1)(2)(3)(1, 2, 3)); // 12
 ### Invariants
 
 - Инвариант в программировании — логическое выражение, определяющее непротиворечивость состояния (набора данных).
+
+### Circular reference
+
+- Circular reference represents a big problem in computing and can happen in a production application when one piece of code requires result from another and the referenced code needs result from the original code.
+
+### Immutability
+
+- strings are immutable – they cannot change, we can only ever make new strings.
+
+### Bundlers
+
+- Bundlers introduce a compile step so JavaScript code is generated at build time. Code is processed to include dependencies and produce a single ES5 cross-browser compatible concatenated file
+
+- The script defer attribute delays script execution until the document has loaded and parsed. Modules — including inline scripts defer by default.
+
+### Operators
+
+- оператор сложения имеет левую ассоциативность. Это значит, что в случае с составными сложениями процесс пойдёт слева направо, вот почему мы вначале видим 12 + 144, а потом 156 + 16
 
 ### Misc
 
