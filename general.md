@@ -84,3 +84,13 @@
 - CQS
 - Law of Demeter
 - Single level of Abstraction principle
+
+### Two ways to update the DOM using frameworks
+
+- Re-render the whole component: React. When the state of a component changes it renders a DOM in memory and compares it with the existing DOM. Actually since that would be very expensive it renders a Virtual DOM and compares it with the previous Virtual DOM snapshot. Then it calculates the changes and performs the same changes to the real DOM. This process is called reconciliation.
+
+- Watch for changes using observers: Angular and Vue.js. Your state variables are observed and when they change only the DOM elements where those values are/were involved in the rendering are updated.
+
+### Why modern frameworks exist?
+
+- It is not possible to write complex, efficient and easy to maintain UIs with Vanilla JavaScript. That’s the main reason you need a modern JavaScript framework.
