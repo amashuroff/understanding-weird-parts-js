@@ -9,7 +9,7 @@
 - to get around the above point, CORS sends pre-flight request, Options, with Access Control Request Method, is this method allowed?
 - Then, if everything is OK, Foo.com will send Access Control Allow Origin: Moo.com, Access Control Allow Methods PUT for example
 
-### What si JSONP
+### What is JSONP
 
 - JSONP predates the CORS standard
 - only works with get
