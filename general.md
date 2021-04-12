@@ -94,3 +94,7 @@
 ### Why modern frameworks exist?
 
 - It is not possible to write complex, efficient and easy to maintain UIs with Vanilla JavaScript. That’s the main reason you need a modern JavaScript framework.
+
+### Где использовать абстракции
+
+- Если создание объекта и вызов метода можно заменить на обычную функцию, то ни о какой абстракции речи не идёт
