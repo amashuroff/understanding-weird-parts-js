@@ -502,6 +502,14 @@ console.log(alex);
 - Массив представляется цельным куском памяти, размер которого вычисляется по следующей формуле: количество элементов \* количество памяти под каждый элемент
 - index in array is a memory offset relative to the start of the memory block (C progrm lang)
 
+```javascript
+const arrOfArrays = [
+  ["a", "b"],
+  ["a", "c"],
+];
+arrOfArrays.sort(); // will convert each array to string representation (toString())
+```
+
 ### Objects
 
 - Если имя константы соответствует имени свойства в объекте, то можно просто добавить имя константы в определение объекта без указания свойства
