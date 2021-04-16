@@ -748,6 +748,10 @@ console.log(+sum(1)(2)(3)(1, 2, 3)); // 12
 
 - оператор сложения имеет левую ассоциативность. Это значит, что в случае с составными сложениями процесс пойдёт слева направо, вот почему мы вначале видим 12 + 144, а потом 156 + 16
 
+### Symbols
+
+- New as of ES6, an additional primitive value type has been added, called "Symbol". Symbols are special "unique" (not strictly guaranteed!) values that can be used as properties on objects with little fear of any collision. They're primarily designed for special built-in behaviors of ES6 constructs, but you can also define your own symbols.
+
 ### Misc
 
 - we can change global var (if not const) in the scope of the function
