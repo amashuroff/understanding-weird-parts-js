@@ -780,6 +780,45 @@ console.log(myUrl);
 // followed by hexadecimal value of that character (here it is space)
 ```
 
+### Blobs and Files
+
+- Blobs work with many calls, used to process Files.
+- The most important one is URL.createObjectURL(), which can be used to create url, that can be used in hrefs and stc attributes in html
+- Basically, blob gives JS something like a temporary file, and letss you treat those files, like if they where files on a web server
+
+```javascript
+const inpFile = document.getElementById("inpFile");
+const previewImg = document.getElementById("preview");
+
+// every one of them uses Blob behind the scenes
+
+// using URL.createObjectURL with uploaded files to show the preview of the file (img)
+
+// inpFile.addEventListener("change", (e) => {
+//   console.log(e.target.files[0]);
+//   console.log(URL.createObjectURL(e.target.files[0]));
+//   previewImg.src = URL.createObjectURL(e.target.files[0]);
+//   console.log(inpFile.files);
+// });
+
+// using FileReader
+
+// inpFile.addEventListener("change", (e) => {
+//   const reader = new FileReader();
+
+//   reader.onload = () => {
+//     console.log(reader.result);
+//     console.log("hello reader");
+//     previewImg.src = reader.result;
+//   };
+
+//   reader.readAsDataURL(e.target.files[0]);
+// });
+
+console.log(inpFile);
+console.log(previewImg);
+```
+
 ### Misc
 
 - we can change global var (if not const) in the scope of the function
