@@ -337,6 +337,9 @@ for (let index in arr) {
 - in JS, this is determined by the calling context;
 - WHO calls the function, which object, window or the one you've just created
 - it's not lexical, it is determined by context, or how the function is executed
+- this — это не ссылка функции на саму себя и это не ссылка на область видимости функции.
+
+- В действительности this — это привязка, которая создается во время вызова функции, и на что она ссылается определяется тем, где и при каких условиях функция была вызвана.
 
 ```javascript
 "use strict";
@@ -751,6 +754,31 @@ console.log(+sum(1)(2)(3)(1, 2, 3)); // 12
 ### Symbols
 
 - New as of ES6, an additional primitive value type has been added, called "Symbol". Symbols are special "unique" (not strictly guaranteed!) values that can be used as properties on objects with little fear of any collision. They're primarily designed for special built-in behaviors of ES6 constructs, but you can also define your own symbols.
+
+### URL object
+
+```javascript
+const myNewURL = new URL("https://www.youtube.com/");
+const myUrl = new URL(window.location.href);
+
+// console.log(myNewURL.host);
+// console.log(myNewURL.hostname);
+// console.log(myNewURL.toString());
+// console.log(myNewURL.href);
+
+// myNewURL.search = "?name=tom henry&age=21"; // least preferred way
+
+// myNewURL.searchParams.set("age", 72); // preferred way
+// myNewURL.searchParams.get("age");
+console.log(myNewURL);
+console.log(myUrl);
+
+// can easily pass URL object into fetch function, like fetch(myURL)
+
+// %20 - spaces and other characters that are not
+// allowed in the URL should be encoded with the % sign,
+// followed by hexadecimal value of that character (here it is space)
+```
 
 ### Misc
 
