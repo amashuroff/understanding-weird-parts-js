@@ -19,6 +19,13 @@
 - Objects - used to group related data and code
 - Functions - used to refer to code
 
+### Symbols
+
+- Unique values, totally unique keys, no values
+- One main thing people do with symbols, use as an identifier for object properties
+- they are not private, not hidden, they are just not obvious
+- New as of ES6, an additional primitive value type has been added, called "Symbol". Symbols are special "unique" (not strictly guaranteed!) values that can be used as properties on objects with little fear of any collision. They're primarily designed for special built-in behaviors of ES6 constructs, but you can also define your own symbols.
+
 ### Parameters and Arguments
 
 - Parameters are variables listed as a part of the function definition. f (a, b) {}
@@ -211,7 +218,7 @@ import "./worker";
 
 ### Hoisting
 
-- all function and var! declarations are put on the top of the current scope
+- all function and variable declarations are put on the top of the current scope
 - with let however, it cannot be accessed before initialization
 
 ```javascript
@@ -765,10 +772,6 @@ console.log(+sum(1)(2)(3)(1, 2, 3)); // 12
 ### Operators
 
 - оператор сложения имеет левую ассоциативность. Это значит, что в случае с составными сложениями процесс пойдёт слева направо, вот почему мы вначале видим 12 + 144, а потом 156 + 16
-
-### Symbols
-
-- New as of ES6, an additional primitive value type has been added, called "Symbol". Symbols are special "unique" (not strictly guaranteed!) values that can be used as properties on objects with little fear of any collision. They're primarily designed for special built-in behaviors of ES6 constructs, but you can also define your own symbols.
 
 ### URL object
 
