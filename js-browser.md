@@ -4,6 +4,21 @@
 
 ---
 
+### Primitive values
+
+- Strings - used for text
+- Numbers - used for math calculations
+- Undefined - used for unintentionally missing values
+- Null - used for intentionally missing values
+- BigInt - used for math calculations with big numbers
+- Booleans - used for logical operations
+- Symbols - used to hide implementation details
+
+### Objects and functions
+
+- Objects - used to group related data and code
+- Functions - used to refer to code
+
 ### Parameters and Arguments
 
 - Parameters are variables listed as a part of the function definition. f (a, b) {}
@@ -793,6 +808,7 @@ const previewImg = document.getElementById("preview");
 // every one of them uses Blob behind the scenes
 
 // using URL.createObjectURL with uploaded files to show the preview of the file (img)
+// much more efficient than file reader
 
 // inpFile.addEventListener("change", (e) => {
 //   console.log(e.target.files[0]);
