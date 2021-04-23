@@ -128,3 +128,54 @@
 
 - явные - простые и низкоуровневые функции
 - неявные - передача дальше по цепочки вызовов, множество опциональных параметров, когда данных много
+
+### Object oriented design
+
+- It is a way of designing complex programs that breaks them down to individual classes or objects (instances of classes), which incapsulate functionality and have specific roles and responsibilities
+
+### Agile
+
+- isn't really a methododlogy, rather it defines at a very high level how software dev should be done
+- Agile ignited the idea that software should be developed and delivered incrementally and embraced the idea that requirements can and should change dureing the development of the software
+
+### Scrum
+
+- Scrum, is formalised and prescriptive methodology that defines specific roles in software development team, the workflow for development and what specific meeting should take place in each iteration of dev, all know as sprint.
+- Iteration
+
+### Kanban
+
+- Kanban is very much focused on the idea of continuous improvement via feedback loops
+- Repeatable process is more important than specific methodology
+
+### Boy Scouts rule
+
+- “Leave the campground cleaner than you found it”
+- Leave the code better than you found it
+- When you are working on some code, fixing bug or anything, try to leave code in slightly better state than you found it before
+- Make it easier to understand
+- Make cleaner, simpler design
+
+### Readability
+
+- One of the most important factors influencing the maintainability of the code is its readability
+- Code is read more than written
+- The easier its is for them to understand, the easier it will be for them to do - corrections and changes, the less time it will take
+- Strive for readability above all else
+- Write clean, readable code that doesn’t need comments
+
+### Handling bugs
+
+- Reproduce the bug
+- SIT AND THINK
+- Take a browse through the source code
+
+### Refactor
+
+- Refactoring is improving the design of existing code, making existing code more readable without changing the functionality
+- Making code better, and this means more readable and maintainable
+- However it can also mean that you reduced the total lines by eliminating duplication or improving the overall architecture to make it more flexible and robust
+
+### Cyclomatic complexity
+
+- how many possible paths there are through your code
