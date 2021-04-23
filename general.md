@@ -9,6 +9,18 @@
 - to get around the above point, CORS sends pre-flight request, Options, with Access Control Request Method, is this method allowed?
 - Then, if everything is OK, Foo.com will send Access Control Allow Origin: Moo.com, Access Control Allow Methods PUT for example
 
+### Динамически типизированный / Статически
+
+- Во время выполнения / во время компиляции
+
+### Слабая / Сильная типизация
+
+- авто приведение типов / запрещено
+
+### Явная типизация / неявная
+
+- надо задавать тип явно / не надо
+
 ### What is JSONP
 
 - JSONP predates the CORS standard
