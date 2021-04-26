@@ -181,6 +181,11 @@ text`Hello world ${1}`;
 - Null is used by programmers to indicate no value, only a human will ever set a variable to a value of null. In statically typed languages like Java, null is a concept of an absence of the value, whereas in JS it has an actual value of null.
 - NaN, the only JS value that is unequal to itself, check for NaN --> is me equal to myself?
 
+### Objects and props
+
+- Properties are wires, they point to values, properties start from objects
+- You can't have more than 1 property with the same name in one object
+
 ### Strings
 
 - \ перед символом, и символ "изолируется" от своей специфической роли и превратится в обычный знак в строке.
@@ -493,6 +498,7 @@ console.log(valeriya);
 
 - proto points to the this object's prototype
 - JS traverses the prototype chain, when looking for a property and only turns undefined when it can't find property in all the objects in the chain
+- mutating a shared prototype is called prototype pollution
 
 ```javascript
 const animal = {
@@ -508,6 +514,11 @@ const alex = Object.create(animal, {
 
 console.log(alex);
 ```
+
+### Prototype vs **proto**
+
+- the Prototype property is almoust unrelated to the core idea of prototypes, it is more related to the new operator
+- **proto** means an object's prototype
 
 ### Difference between event bubbling and capturing
 
@@ -881,6 +892,18 @@ console.log(previewImg);
 - block - что? меню, навбар (независимость)
 - element - что ЭТО? составная часть блока, не может быть использована без него
 - modifier - какой? определяет внешность блока/элемента
+
+### Mutation
+
+- there is a school of thought that mutation is best contained to a very narrow layer of the application
+- The downside is taht you would likely write more boilerplate code to 'pass things around'. But the benefit, according to that philosophy, is that your program's behavior will become more predictable
+
+### Query string parametes / Get parameters / POST parameters
+
+- Параметры query string не имеют никаког отношения к GET запросам, хотя многие разработчики называют из гет параметрами.
+- На собеседованиях иногда задают вопрос: "Можно ли одновременно отправить POST и GET параметры"?
+- Конечно можно, никакой связи между ними нет
+- В некоторых языках существуют способы получения этих данных отдельно друг от друга
 
 ### Misc
 
