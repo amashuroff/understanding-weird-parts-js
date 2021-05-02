@@ -129,3 +129,12 @@ function WelcomeDialog() {
 
 - may not update right after called, (React batches state updates)
 - prove a callback to fire up, right after the state updates
+- it is asynchronous
+
+### Controlled component
+
+- is one that takes it's current value through props, and notifies changes through callback, a parent component controlls it by handling the callback and managing it's own state, and passing new values as props to the child component
+
+### Uncontrolled component
+
+- is one that stores it's own state internally, and you query the DOM using a ref to find its current value when you need it, this is a bit more liek traditional html

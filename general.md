@@ -1,5 +1,8 @@
 # General
 
+- Главная цель программирования - управление сложностью
+- Чем усерднее вы работаете над компенсацией ограниченных возможностей своего разума, тем лучше будете программировать. Быстрота вашего развития напрямую зависит от вашщей скромности
+
 ### What is CORS
 
 - Cross origin resource sharing
@@ -191,3 +194,14 @@
 ### Cyclomatic complexity
 
 - how many possible paths there are through your code
+
+### MobX
+
+- allows to write cleaner code
+- allows to write less code
+- component will re-render only if data that is used by that component changes
+- mobX has less dependencies
+
+### Декомпозиция
+
+- До тех пор, пока очевидность и простота проекта не станут вас в каком-то смысле раздражать, в этот момент все готово. Если что-то не ясно продолжайте декомпозицию. Если сейчас ваше решение кажется чуть чуть хитрым, для любого, кто будет работать над ним позднее, оно станет головоломкой
