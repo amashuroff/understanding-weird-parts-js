@@ -15,6 +15,10 @@
 - let: можно менять значение переменной
 - const: нельзя (но можно менять внутренности (наполнение) составного типа данных обьект (pointers))
 
+### Literal
+
+- A literal is when you refer to a value by literally writing it down in your program. For example, 2 is a number literal, and "Banana" is a string literal.
+
 ### Primitive values
 
 - Strings - used for text
@@ -226,7 +230,12 @@ import "./worker";
 - Local scope, cannot be accessed outside of the function block (scope)
 - Block scope, {}
 - Область видимости (scope) — это широкое понятие, означающее, грубо говоря, «интерпретатор в разных местах кода видит разные штуки».
-- Лексическая область видимости (Lexical scoping) — это конкретный механизм, одно из правил для области видимости. Этот механизм применяется в JavaScript и большинстве других языков. Под лексической областью видимости можно понимать просто механизм поиска значений: смотрим в текущей области, если нет — идём на уровень выше, и так далее. Слово «лексический» означает, что видимость задаётся исключительно текстом программы, исходным кодом..
+- Лексическая область видимости (Lexical scoping) — это конкретный механизм, одно из правил для области видимости. Этот механизм применяется в JavaScript и большинстве других языков. Под лексической областью видимости можно понимать просто механизм поиска значений: смотрим в текущей области, если нет — идём на уровень выше, и так далее. Слово «лексический» означает, что видимость задаётся исключительно текстом программы, исходным кодом.
+- It would suck if there could only be one message variable in the whole program. Instead, when you define a variable, it becomes available in a part of your program. That part is called a “scope”
+
+### Window
+
+- это глобальный объект предоставляемый браузером, внутри которого содержатся все встроенные в браузерный JavaScript функции и свойства
 
 ### Closures
 
@@ -236,6 +245,8 @@ import "./worker";
 
 - all function and variable declarations are put on the top of the current scope
 - with let however, it cannot be accessed before initialization
+- Normally, you can only use a variable after its declaration with let or const has run. This can be annoying with functions because they may need to call each other, and it's hard to track which function is used by which others and needs to be defined first. As a convenience, when (and only when!) you use the function declaration syntax, the order of their definitions doesn't matter because they get "hoisted".
+- This is a fancy way of saying that conceptually, they all automatically get moved to the top of the scope. By the time you call them, they're all defined.
 
 ```javascript
 // looks like this
@@ -405,6 +416,7 @@ obj.checkThis();
 - Apply a function with specific this and arguments as an array, apply(this, [a, b, c])
 - Normally you will use call, unless a function takes in a variable number of parameters
 - Bind a this to a function EXPRESSION. Doesn't work of function declarations, because bind is applicable to the function object that is created
+- Usually, binding a function f to a particular this value and arguments means creating a new function that calls f with those predefined values. JavaScript has a built-in helper to do it called .bind, but you could also do it by hand. Binding was a popular way to make nested functions "see" the same value of this as the outer functions. But now this use case is handled by arrow functions, so binding is not used as often.
 
 ```javascript
 function c(a, b = 2) {
@@ -621,6 +633,11 @@ const {
 
 - Они реализуют обобщенный алгоритм задачи, делегируя обработку вызывающему коду,
   что позволяет не реализовывать алгоритм каждый раз.
+- A higher-order function is a function that deals with other functions by taking them as arguments or returning them.
+
+### Re-assignment
+
+- There are three common cases when reassignments cause bugs: when the scope is very large (such as module scope or huge functions), when the value is a parameter (so it's unexpected that it would be equal to something other than what was passed), and when a variable is used in a nested function.
 
 ### Currying
 
@@ -835,6 +852,7 @@ console.log(myUrl);
 
 ### Blobs and Files
 
+- Blob stands for Binary Large Object and is a data type that can store binary data. It represents data like programs, code snippets, multimedia objects, and other things that don’t support JavaScript native format.
 - Blobs work with many calls, used to process Files.
 - The most important one is URL.createObjectURL(), which can be used to create url, that can be used in hrefs and stc attributes in html
 - Basically, blob gives JS something like a temporary file, and letss you treat those files, like if they where files on a web server
@@ -886,6 +904,10 @@ console.log(previewImg);
 
 - информация для браузера, какую версию ожидать
 
+### Cookies
+
+- JavaScript позволяет обращаться к кукам в браузере. Это автоматически означает, что если злоумышленнику удастся разместить произвольный код на странице сайта, то он сможет прочитать куку с данными аутентификации и передать её злоумышленнику. Так легко и беззаботно уводятся сессии и пользователи внезапно оказываются без своего аккаунта. Ни антивирус, ни фаервол в такой ситуации ничем помочь не смогут.
+
 ### script tag async / defer
 
 - async - скрипт выполнится как только загрузится
@@ -909,6 +931,14 @@ console.log(previewImg);
 
 - there is a school of thought that mutation is best contained to a very narrow layer of the application
 - The downside is taht you would likely write more boilerplate code to 'pass things around'. But the benefit, according to that philosophy, is that your program's behavior will become more predictable
+
+### DOM
+
+- Что такое DOM-дерево и зачем оно нужно для формирования страницы, когда у нас есть HTML? Дело в том, что HTML это просто текст. Его крайне неудобно использовать напрямую (скорее даже невозможно в данном случае). Гораздо проще создать на его базе объект, который будет соответствовать структуре самого HTML. Затем использовать его для формирования страницы. Именно этим объектом и является DOM-дерево.
+
+- (Document Object Model) — это не зависящий от платформы и языка формат, позволяющий программам и скриптам получить доступ к содержимому HTML-документов, а также изменять их содержимое, структуру и оформление.
+
+- даже если сам HTML будет правильным, браузер при создании DOM-дерева добавляет в него узлы, представленные тегами в html, которые вы, возможно, пропустили, но стандарт требует их наличия. Например, в таблицы добавляется <tbody> и не важно был он в исходном HTML или нет.
 
 ### Query string parametes / Get parameters / POST parameters
 
