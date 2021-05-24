@@ -29,6 +29,18 @@
 - Booleans - used for logical operations
 - Symbols - used to hide implementation details
 
+### Boxing Unboxing / Object Constructor
+
+Values that are typeof "object" (such as an array) are additionally tagged with an internal [[Class]] property (think of this more as an internal classification rather than related to classes from traditional class-oriented coding)
+
+You'll note that there are no Null() or Undefined() native constructors, but nevertheless the "Null" and "Undefined" are the internal [[Class]] values exposed.
+
+But for the other simple primitives like string, number, and boolean, another behavior actually kicks in, which is usually called "boxing" (see "Boxing Wrappers”)
+
+These object wrappers serve a very important purpose. Primitive values don't have properties or methods, so to access .length or .toString() you need an object wrapper around the value. Thankfully, JS will automatically box (aka wrap) the primitive value to fulfill such accesses.
+
+New as of ES6, an additional primitive value type has been added, called "Symbol". Symbols are special "unique" (not strictly guaranteed!) values that can be used as properties on objects with little fear of any collision. They're primarily designed for special built-in behaviors of ES6 constructs, but you can also define your own symbols.
+
 ### Objects and functions
 
 - Objects - used to group related data and code
@@ -387,6 +399,8 @@ for (let index in arr) {
 - WHO calls the function, which object, window or the one you've just created
 - it's not lexical, it is determined by context, or how the function is executed
 - this — это не ссылка функции на саму себя и это не ссылка на область видимости функции.
+
+When the function is called, an activation record is created, also known as the calling context. This record contains information about where the function was called from (call stack), how the function was called, what parameters were passed to it, etc. One of the properties of this entry is a link thisthat will be used throughout this function.
 
 - В действительности this — это привязка, которая создается во время вызова функции, и на что она ссылается определяется тем, где и при каких условиях функция была вызвана.
 
@@ -917,6 +931,30 @@ console.log(previewImg);
 
 - опасны, потому что не могут быть перезаписаны с помощью подключенного файла css
 
+### Node Children and Ancestors
+
+- Дочерними (по отношению к узлу) являются только те узлы, которые непосредственно в нём лежат (находятся на "первом уровне вложенности").
+- Потомками (по отношению к узлу) являются все вложенные в него узлы (находящиеся на "всех уровнях вложенности")
+
+### HTML attributes
+
+- Атрибут — всегда строка, а свойство — не всегда.
+- Атрибуты не чувствительны к регистру
+
+### children / childNodes
+
+- children (only child ELEMENTS)
+- childNodes (all nodes and elements)
+- Между children (только Elements) и childNodes (Elements and other Nodes) есть еще одно довольно важное отличие. Они возвращают не только разный набор узлов, но и сам тип коллекции в первом и втором случае разный. childNodes возвращает NodeList, а children – HTMLCollection
+
+### DOM selector
+
+- селектор — это правило, позволяющее описать набор элементов в DOM-дереве.
+
+### document.getElementById()
+
+- Так как id в соответствии со спецификацией обязан быть уникальным на странице, то и метод getElementById() всегда возвращает один элемент. С другой стороны, по случайности в HTML может оказаться несколько тегов с одним id. В такой ситуации браузер вернёт первый встреченный элемент.
+
 ### !important
 
 - увеличивает приоритет стилей до пред максимального (максимальный - inline styles)
@@ -947,10 +985,63 @@ console.log(previewImg);
 - Конечно можно, никакой связи между ними нет
 - В некоторых языках существуют способы получения этих данных отдельно друг от друга
 
+### Browser High-level structure / The components of the browsers
+
+- User interface: The user interface includes the address bar, back/forward button, bookmarking menu, etc. Every part of the browser display except the window where you see the requested page.
+- Browser engine: The browser engine marshals actions between the UI and the rendering engine.
+- Rendering engine: The rendering engine is responsible for displaying requested content. For example if the requested content is HTML, the rendering engine parses HTML and CSS, and displays the parsed content on the screen.
+- Networking: The networking handles network calls such as HTTP requests, using different implementations for different platforms behind a platform-independent interface.
+- UI backend: The UI backend is used for drawing basic widgets like combo boxes and windows. This backend exposes a generic interface that is not platform-specific. Underneath it uses operating system user interface methods.
+- JavaScript engine: The JavaScript engine is used to parse and execute JavaScript code.
+- Data storage: The data storage is a persistence layer. The browser may need to save all sorts of data locally, such as cookies. Browsers also support storage mechanisms such as localStorage, IndexedDB, WebSQL and FileSystem.
+
+### HTML parsing
+
+- The rendering engine starts getting the contents of the requested document from the networking layer. This will usually be done in 8kB chunks.
+- The primary job of the HTML parser is to parse the HTML markup into a parse tree.
+- The output tree (the "parse tree") is a tree of DOM element and attribute nodes. DOM is short for Document Object Model. It is the object presentation of the HTML document and the interface of HTML elements to the outside world like JavaScript. The root of the tree is the "Document" object. Prior to any manipulation via scripting, the DOM has an almost one-to-one relation to the markup.
+
+### HTML parsing algorithm
+
+HTML cannot be parsed using the regular top-down or bottom-up parsers. The reasons are:
+
+- The forgiving nature of the language.
+- The fact that browsers have traditional error tolerance to support well known cases of invalid HTML.
+- The parsing process is reentrant. For other languages, the source doesn't change during parsing, but in HTML, dynamic code (such as script elements containing document.write() calls) can add extra tokens, so the parsing process actually modifies the input.
+
+The algorithm consists of two stages: tokenization and tree construction.
+
+- Actions when the parsing is finished.
+- The browser begins fetching external resources linked to the page (CSS, images, JavaScript files, etc.).
+  At this stage the browser marks the document as interactive and starts parsing scripts that are in "deferred" mode: those that should be executed after the document is parsed. The document state is set to "complete" and a "load" event is fired.
+  Note there is never an "Invalid Syntax" error on an HTML page. Browsers fix any invalid content and go on.
+
+### CSS interpretation
+
+- Parse CSS files, <style> tag contents, and style attribute values using "CSS lexical and syntax grammar"
+- Each CSS file is parsed into a StyleSheet object, where each object contains CSS rules with selectors and objects corresponding CSS grammar.
+- A CSS parser can be top-down or bottom-up when a specific parser generator is used.
+
+### Page rendering
+
+- Create a 'Frame Tree' or 'Render Tree' by traversing the DOM nodes, and calculating the CSS style values for each node.
+- Calculate the preferred width of each node in the 'Frame Tree' bottom-up by summing the preferred width of the child nodes and the node's horizontal margins, borders, and padding.
+- Calculate the actual width of each node top-down by allocating each node's available width to its children.
+- Calculate the height of each node bottom-up by applying text wrapping and summing the child node heights and the node's margins, borders, and padding.
+- Calculate the coordinates of each node using the information calculated above.
+- More complicated steps are taken when elements are floated, positioned absolutely or relatively, or other complex features are used.
+- Create layers to describe which parts of the page can be animated as a group without being re-rasterized. Each frame/render object is assigned to a layer.
+- Textures are allocated for each layer of the page.
+- The frame/render objects for each layer are traversed and drawing commands are executed for their respective layer. This may be rasterized by the CPU or drawn on the GPU directly using D2D/SkiaGL.
+- All of the above steps may reuse calculated values from the last time the webpage was rendered, so that incremental changes require less work.
+- The page layers are sent to the compositing process where they are combined with layers for other visible content like the browser chrome, iframes and addon panels.
+- Final layer positions are computed and the composite commands are issued via Direct3D/OpenGL. The GPU command buffer(s) are flushed to the GPU for asynchronous rendering and the frame is sent to the window server.
+
 ### Misc
 
 - we can change global var (if not const) in the scope of the function
 - if we pass an argument to the function by value (primitives), we pass the copy of that var.
+- parentNode of html element is the document itself (node, not element)
 
 ```javascript
 let a = 0;

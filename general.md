@@ -121,6 +121,8 @@
 
 ### Architecture and OOP
 
+Ключ к созданию хороших масштабируемых систем это проработка механизмов общения модулей, а не проработка их внутренних свойств и поведения. - Алан Кей
+
 - some key points of constructing the code
 - isolate side effects from pure code, it would be really nice to have all side effects happen on the highest level of (abstraction?)
 - use Automata programming, every set of processes that flow in the system/project is a potential final automata
@@ -195,6 +197,10 @@
 
 - how many possible paths there are through your code
 
+### Системные тесты
+
+- То есть код теста имитирует настоящие действия пользователей и смотрит на то, как изменился DOM. Такой вид тестов называется системным.
+
 ### MobX
 
 - allows to write cleaner code
@@ -205,3 +211,13 @@
 ### Декомпозиция
 
 - До тех пор, пока очевидность и простота проекта не станут вас в каком-то смысле раздражать, в этот момент все готово. Если что-то не ясно продолжайте декомпозицию. Если сейчас ваше решение кажется чуть чуть хитрым, для любого, кто будет работать над ним позднее, оно станет головоломкой
+
+### PWA / Progressive Web Apps
+
+- Progressive web app: is a hybrid between regular web pages and mobile applications, The term “progressive” refers to the fact that they introduce new features and, from the user experience’s point of view, they are initially perceived as normal websites but progressively behave more like mobile apps, among other things multiplatform.
+
+- Сердце PWA — Service Worker. Это проксирующий слой между фронтэндом и бэкэндом, находящийся в браузере. Все запросы браузера идут через него. Данное разделение на два независимых слоя позволило сделать переход обычного веб сайта в PWA максимально простым.
+
+### W3C
+
+- (World Wide Web Consortium) organization, which is the standards organization for the web.
