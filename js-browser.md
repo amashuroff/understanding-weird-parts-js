@@ -570,6 +570,18 @@ console.log(alex);
 
 - by Default event listener listens to the bubbling phase
 
+### Event listeners
+
+- Каждый обработчик события представляет собой функцию, которая будет вызвана в момент наступления события. Обработчики вызываются один за другим, в том же порядке, в котором они были определены.
+- Возврат false внутри значения атрибута также приводит к отмене действия по умолчанию. (onclick, onsubmit etc )
+
+### Event
+
+Базовые свойства объекта-события Event:
+
+- event.target - элемент, на котором произошло событие
+- event.type - тип события
+
 ### Difference between stopPropagation() and preventDefault()
 
 - stopPropagation stops from going through bubbling phase or capturing phase
@@ -985,6 +997,11 @@ console.log(previewImg);
 - Конечно можно, никакой связи между ними нет
 - В некоторых языках существуют способы получения этих данных отдельно друг от друга
 
+### Data attribute
+
+- Для работы с произвольными свойствами в html зарезервирован специальный атрибут data-\*, где на месте звездочки может стоять любое слово.
+- Такие атрибуты активно используются в JavaScript плагинах и позволяют не завязываться на классы. В элементах DOM они доступны через специальное свойство dataset
+
 ### Browser High-level structure / The components of the browsers
 
 - User interface: The user interface includes the address bar, back/forward button, bookmarking menu, etc. Every part of the browser display except the window where you see the requested page.
@@ -1037,6 +1054,16 @@ The algorithm consists of two stages: tokenization and tree construction.
 - The page layers are sent to the compositing process where they are combined with layers for other visible content like the browser chrome, iframes and addon panels.
 - Final layer positions are computed and the composite commands are issued via Direct3D/OpenGL. The GPU command buffer(s) are flushed to the GPU for asynchronous rendering and the frame is sent to the window server.
 
+### Microtasks queue
+
+Asynchronous tasks need proper management. For that, the ECMA standard specifies an internal queue PromiseJobs, more often referred to as the “microtask queue” (V8 term).
+As stated in the specification:
+
+- The queue is first-in-first-out: tasks enqueued first are run first.
+- Execution of a task is initiated only when nothing else is running.
+
+- Promise handling is always asynchronous, as all promise actions pass through the internal “promise jobs” queue, also called “microtask queue” (V8 term).
+
 ### Misc
 
 - we can change global var (if not const) in the scope of the function
@@ -1061,3 +1088,4 @@ console.log(a, b);
 - JavaScript properties that begin with a digit cannot be referenced with dot notation and must be accessed using bracket notation.
 - ECMAScript. Это большой и серьезный документ, описывающий устройство языка и поведение во всех возможных ситуациях.
 - В console.log() встроено одно ограничение, если в объекте есть другие объекты на глубине больше второго уровня вложенности, то при выводе такого объекта на экран вместо объектов отобразится строка [Object], а вместо массива [Array]
+- Что происходит, когда обычная ошибка не перехвачена try..catch? Скрипт умирает с сообщением в консоли.

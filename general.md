@@ -12,6 +12,10 @@
 - to get around the above point, CORS sends pre-flight request, Options, with Access Control Request Method, is this method allowed?
 - Then, if everything is OK, Foo.com will send Access Control Allow Origin: Moo.com, Access Control Allow Methods PUT for example
 
+### Polyfill
+
+- Полифилл - природа JavaScript позволяет частично компенсировать недостатки старых браузеров. Благодаря прототипам у разработчиков есть возможность добавить недостающую функциональность прямо в реализацию DOM. Делается это с помощью полифиллов.
+
 ### Динамически типизированный / Статически
 
 - Во время выполнения / во время компиляции
