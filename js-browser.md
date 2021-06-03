@@ -532,6 +532,9 @@ console.log(valeriya);
 
 - С технической точки зрения, промис — это объект, имеющий три состояния (см. конечные автоматы и автоматное программирование): pending, fulfilled и rejected. Промис начинается в состоянии pending, а затем, с помощью функций ("событий", как говорят в теории автоматов) resolve и reject переводится в одно из конечных (терминальных) состояний fulfilled или rejected. Перейдя однажды в эти состояния, промис уже не может откатиться назад или уйти в другое терминальное состояние. То есть после вызова resolve, нет способа привести промис в состояние rejected, вызывая функцию reject.
 
+- Debugging: If you have used promises, you know that debugging them is a nightmare. For example, if you set a breakpoint inside a .then block and use debug shortcuts like “stop-over”, the debugger will not move to the following .then because it only “steps” through synchronous code.
+  With async/await you can step through await calls exactly as if they were normal synchronous functions.
+
 ### Prototype chain
 
 - proto points to the this object's prototype
@@ -1063,6 +1066,63 @@ As stated in the specification:
 - Execution of a task is initiated only when nothing else is running.
 
 - Promise handling is always asynchronous, as all promise actions pass through the internal “promise jobs” queue, also called “microtask queue” (V8 term).
+
+### Callstack
+
+- The Call Stack is a data structure which records basically where in the program we are. If we step into a function, we put it on the top of the stack. If we return from a function, we pop off the top of the stack. That’s all the stack can do.
+
+- Each entry in the Call Stack is called a Stack Frame.
+
+### V8
+
+- V8 was first designed to increase the performance of JavaScript execution inside web browsers. In order to obtain speed, V8 translates JavaScript code into more efficient machine code instead of using an interpreter. It compiles JavaScript code into machine code at execution by implementing a JIT (Just-In-Time) compiler like a lot of modern JavaScript engines do such as SpiderMonkey or Rhino (Mozilla). The main difference here is that V8 doesn’t produce bytecode or any intermediate code.
+
+### Optimized JS
+
+- Order of object properties: always instantiate your object properties in the same order so that hidden classes, and subsequently optimized code, can be shared.
+- Dynamic properties: adding properties to an object after instantiation will force a hidden class change and slow down any methods that were optimized for the previous hidden class. Instead, assign all of an object’s properties in its constructor.
+- Methods: code that executes the same method repeatedly will run faster than code that executes many different methods only once (due to inline caching).
+- Arrays: avoid sparse arrays where keys are not incremental numbers. Sparse arrays which don’t have every element inside them are a hash table. Elements in such arrays are more expensive to access. Also, try to avoid pre-allocating large arrays. It’s better to grow as you go. Finally, don’t delete elements in arrays. It makes the keys sparse.
+- Tagged values: V8 represents objects and numbers with 32 bits. It uses a bit to know if it is an object (flag = 1) or an integer (flag = 0) called SMI (SMall Integer) because of its 31 bits. Then, if a numeric value is bigger than 31 bits, V8 will box the number, turning it into a double and creating a new object to put the number inside. Try to use 31 bit signed numbers whenever possible to avoid the expensive boxing operation into a JS object.
+
+### Memory management JS
+
+- JavaScript allocates memory when things (objects, strings, etc.) are created and “automatically” frees it up when they are not used anymore, a process called garbage collection. This seemingly “automatical” nature of freeing up resources is a source of confusion and gives JavaScript (and other high-level-language) developers the false impression they can choose not to care about memory management. This is a big mistake.
+
+### Memory lifecycle
+
+Here is an overview of what happens at each step of the memory lifecycle:
+
+-     	Allocate memory — memory is allocated by the operating system which allows your program to use it. In low-level languages (e.g. C) this is an explicit operation that you as a developer should handle. In high-level languages, however, this is taken care of for you.
+-     	Use memory — this is the time when your program actually makes use of the previously allocated memory. Read and write operations are taking place as you’re using the allocated variables in your code.
+-     	Release memory — now is the time to release the entire memory that you don’t need so that it can become free and available again. As with the Allocate memory operation, this one is explicit in low-level languages.
+
+Within the context of memory management, an object is said to reference another object if the former has an access to the latter (can be implicit or explicit). For instance, a JavaScript object has a reference to its prototype (implicit reference) and to its properties’ values (explicit reference).
+
+In this context, the idea of an “object” is extended to something broader than regular JavaScript objects and also contains function scopes (or the global lexical scope).
+
+### Memory leaks
+
+4 types of common memory leaks:
+
+- Global vars
+- Timers or callbacks that are forgotten (using setTimeout with object that is gone)
+- Closures - (shared closure between structures, one of which is unused
+- Out of DOM references (if we store reference (of the tr) in code, then delete the whole table from DOM - single reference to the table cell would keep the whole table in memory )
+
+### Event loop
+
+- The common denominator in all environments is a built-in mechanism called the event loop, which handles the execution of multiple chunks of your program over time, each time invoking the JS Engine.
+
+### Web API's
+
+- what are these Web APIs? In essence, they are threads that you can’t access, you can just make calls to them
+
+### Job queue
+
+- the Job Queue is a queue that’s attached to the end of every tick in the Event Loop queue. Certain async actions that may occur during a tick of the event loop will not cause a whole new event to be added to the event loop queue, but will instead add an item (aka Job) to the end of the current tick’s Job queue.
+
+- Jobs are kind of like the setTimeout(callback, 0) “hack” but implemented in such a way that they introduce a much more well-defined and guaranteed ordering: later, but as soon as possible.
 
 ### Misc
 
