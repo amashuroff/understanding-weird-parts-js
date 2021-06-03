@@ -583,11 +583,17 @@ console.log(alex);
 Базовые свойства объекта-события Event:
 
 - event.target - элемент, на котором произошло событие
+- e.target. Это самый глубокий элемент, до которого идет погружение. Target не меняется в процессе всплытия. Благодаря ему всегда можно узнать, где конкретно произошло событие. Кроме него, доступен объект currentTarget - это элемент, к которому прикреплен данный обработчик. В зависимости от ситуации используется тот или иной.
+
+* target is the element that triggered the event (e.g., the user clicked on)
+* currentTarget is the element that the event listener is attached to.
+
 - event.type - тип события
 
 ### Difference between stopPropagation() and preventDefault()
 
 - stopPropagation stops from going through bubbling phase or capturing phase
+- stopPropagation allows other event handlers on the same element to be executed, while stopImmediatePropagation prevents this. stopPropagation and stopImmediatePropagation prevents event handlers later in the capturing and bubbling phases from being executed.
 - preventDefault stops the default behavior (checkbox tick would not be applied for example)
 
 ### Array Methods
@@ -993,6 +999,16 @@ console.log(previewImg);
 
 - даже если сам HTML будет правильным, браузер при создании DOM-дерева добавляет в него узлы, представленные тегами в html, которые вы, возможно, пропустили, но стандарт требует их наличия. Например, в таблицы добавляется <tbody> и не важно был он в исходном HTML или нет.
 
+DOM events
+
+- DOMContentLoaded – DOM-дерево построено
+- load – все ресурсы загружены (картинки, стили, скрипты, ...)
+- beforeunload – уйти со страницы
+  DOMContentLoaded возникает в тот момент, когда DOM дерево полностью построено и готово к работе, но при этом стили, скрипты и картинки могут находиться в процессе загрузки.
+
+- любой script встреченный в html будет выполняться до полного построения дерева очень
+  Имелось ввиду, что будет выполнен весь код внутри тегов <script></script>. А если вы вставите там ссылку на скачивание js файла, он будет качаться параллельно.
+
 ### Query string parametes / Get parameters / POST parameters
 
 - Параметры query string не имеют никаког отношения к GET запросам, хотя многие разработчики называют из гет параметрами.
@@ -1113,6 +1129,20 @@ In this context, the idea of an “object” is extended to something broader th
 ### Event loop
 
 - The common denominator in all environments is a built-in mechanism called the event loop, which handles the execution of multiple chunks of your program over time, each time invoking the JS Engine.
+
+### Microtasks
+
+Immediately after every macrotask, the engine executes all tasks from microtask queue, prior to running any other macrotasks or rendering or anything else.
+
+1.  Dequeue and run the oldest task from the macrotask queue (e.g. “script”).
+2.  Execute all microtasks:
+    -     	While the microtask queue is not empty:
+      -     	Dequeue and run the oldest microtask.
+3.  Render changes if any.
+4.  If the macrotask queue is empty, wait till a macrotask appears.
+5.  Go to step 1.
+
+- So one may want to queueMicrotask to execute a function asynchronously, but within the environment state.
 
 ### Web API's
 
